@@ -8,6 +8,9 @@ class Game < ApplicationRecord
 
   # TODO would prefer to validate with a custom validator but couldn't get one to work ' could not find such file ' and so forth
   def already_guessed
-    errors.add(:most_recent_guess, "You've already guessed #{most_recent_guess}") if guesses.include? most_recent_guess
+    there_is_a_guess = !most_recent_guess.blank?
+    if (there_is_a_guess and guesses.include? most_recent_guess)
+      errors.add(:most_recent_guess, "You've already guessed #{most_recent_guess}")
+    end
   end
 end
